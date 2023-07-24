@@ -1,10 +1,7 @@
 from django.urls import path
-from .views import *
+from .views import todo_list, todo_detail
 
 urlpatterns = [
-   # path('',home,name='home'),
-   # path('aaa',student_details,name='aaa'),
-   # path('bbb',student_list,name='bbb'),
-   path('student_create/',student_create,name='student_create'),
-
+    path('todos/', todo_list, name='todo-list'),
+    path('todos/<int:pk>/', todo_detail, name='todo-detail'),
 ]
