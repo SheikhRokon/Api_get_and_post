@@ -58,12 +58,15 @@ def student_create(request):
         stream =io.BytesIO(json_data)                #Converting json data to stream data. জেসন ডাটাকে স্ট্রিম ডাটাতে রূপান্তর
         pythondata = JSONParser().parse(stream)         #Convert stream data to Python data স্ট্রিম ডাটাকে পাইথন  ডাটাতে রূপান্তর 
         serializer = StudentSerializers(data=pythondata)         #Convert Python data to complex data পাইথন ডাটাকে কমপ্লেক্স ডাটাতে রূপান্তর
+        print(serializer)
         if serializer.is_valid():
+            print('jjjjjjjjjj',serializer)
             serializer.save()
             res = {'messages': 'Data create successfully'}
-            json_data = JsonResponse().render(res)
+            json_data = JSONRenderer().render(res)
             return HttpResponse(json_data, content_type='application/json')
-        json_data = JSONRenderer().render(serializer.errors)
+        else:
+            json_data = JSONRenderer().render(serializer.errors)
             
 
 

@@ -9,8 +9,6 @@ class Student(models.Model):
     email = models.EmailField()
 
     class Meta:
-       
-
         verbose_name = 'Student'
         verbose_name_plural = 'Students'
 
