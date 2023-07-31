@@ -1,6 +1,9 @@
-from django.shortcuts import render
-from .models import *
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Todo
+from .serializers import TodoSerializer
 
+<<<<<<< HEAD
 # Api get import
 import requests
 
@@ -59,15 +62,47 @@ def student_create(request):
         pythondata = JSONParser().parse(stream)         #Convert stream data to Python data স্ট্রিম ডাটাকে পাইথন  ডাটাতে রূপান্তর 
         serializer = StudentSerializers(data=pythondata)         #Convert Python data to complex data পাইথন ডাটাকে কমপ্লেক্স ডাটাতে রূপান্তর
         print(serializer)
+=======
+@api_view(['GET', 'POST'])
+def todo_list(request):
+    if request.method == 'GET':
+        todos = Todo.objects.all()
+        serializer = TodoSerializer(todos, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = TodoSerializer(data=request.data)
+>>>>>>> 22a1c3f32b05e8278ed77c5a50b86f5b0c7f8408
         if serializer.is_valid():
             print('jjjjjjjjjj',serializer)
             serializer.save()
+<<<<<<< HEAD
             res = {'messages': 'Data create successfully'}
             json_data = JSONRenderer().render(res)
             return HttpResponse(json_data, content_type='application/json')
         else:
             json_data = JSONRenderer().render(serializer.errors)
             
+=======
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+>>>>>>> 22a1c3f32b05e8278ed77c5a50b86f5b0c7f8408
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def todo_detail(request, pk):
+    try:
+        todo = Todo.objects.get(pk=pk)
+    except Todo.DoesNotExist:
+        return Response(status=404)
 
-   
+    if request.method == 'GET':
+        serializer = TodoSerializer(todo)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = TodoSerializer(todo, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    elif request.method == 'DELETE':
+        todo.delete()
+        return Response(status=204)
