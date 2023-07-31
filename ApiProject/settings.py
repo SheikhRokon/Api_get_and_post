@@ -37,10 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'userapp',
-    'test1',
     'rest_framework',
     'registration',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +71,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ApiProject.wsgi.application'
+
+
+REST_FRAMEWORK = {
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+    
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+    
+}
 
 
 # Database
