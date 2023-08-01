@@ -4,6 +4,22 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 
+
+
+@api_view(['GET', 'POST'])
+def create_user(request):
+    if request.method == 'POST':
+        name = request.data['name']
+        age = request.data['age']
+        print(name, age)
+        return Response({"name": name, "age": age})
+    context ={
+        'name':'Rokon',
+        'age':'19'
+    }
+    return Response(context)
+        
+
 @api_view(['POST'])
 def registetionApi(request):
     
@@ -25,3 +41,17 @@ def registetionApi(request):
     else:
         return Response({'message': 'All fields are required!'})
         
+
+# @api_view(['GET', 'POST'])
+# def loginApi(request):
+#     if request.method == 'POST':
+#         username = request.data['username']
+#         password = request.data['password']
+#         if User.objects.filter(username=username).exists():
+#             user = User.objects.get(username=username)
+#             if user.check_password(password):
+#                 return Response({'message': 'Successfully logged in!'})
+#             else:
+#                 return Response({'error': 'Invalid password!'})
+#         else:
+#             return Response({'error': 'Invalid username!'})
